@@ -30,6 +30,10 @@
 * updateDash.js
 * updateScatter.js
 
+## Preprocessing
+
+* Will use a script to get two aggregated data files; airportdelays.csv and airlinedelays.csv.
+
 ## Basic design diagram
 
 ![diagram](doc/diagram.png)
