@@ -13,6 +13,9 @@
 
 * Design document: dataset is too big, so will have to take extra preprocessing steps beforehand to be able to handle all the data. Individual flight data will be aggregated to airline and airport level.
 * Think of extra interactive element on the page: search bar & dropdown / toggle menu.
+* Made basic design diagram.
+
+![diagram](doc/diagram.png)
 
 ### 6-06-2017
 

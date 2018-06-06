@@ -1,4 +1,4 @@
-# H2 Final Project Minor Programming
+# Final Project Minor Programming
 
 Name: Jesse Haenen
 
