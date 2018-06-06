@@ -1,0 +1,4 @@
+# Sketches
+Ideally, the sidebar is fixed and will show rankings to avoid using another page. Maybe only top 20 and worst 20 if the sidebar is too long.
+The main dashboard will show either and airport or airline and its corresponding text data. For airlines, it will show the best and worst locations (airports), its place in the scatter and its track record for every day/month. For airports, it will show the same structure but instead of the top locations it will show the best and worst airlines at that location.
+For added interactivity, clicking an airport or airline in the side barchart will update the line graph below.
