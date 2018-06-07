@@ -24,6 +24,15 @@
 
 ### 7-06-2017
 
+* Write aggregator script: read airport, airline and flight files as dicts, create new dict object and DictWriter to write new csv files with aggregated data.
+* Continued writing aggregator script for airports.
+* New insight: need seperate week and month files for the week/month filtering. I might just save these as seperate columns for both airports and airlines but will take 7 + 12 extra columns.
+* Extra work for the day/month columns would only have to be done once because code structure for airlines.
+
+![sketch](doc/snip.png)
+
+* and it goes on and on... for every week / month
+
 ### 8-06-2017
 
 ## Week 2
