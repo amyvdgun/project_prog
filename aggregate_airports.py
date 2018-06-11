@@ -46,6 +46,8 @@ with open("data/flights.csv", "r", newline="") as fl:
             # for every airport
             for airport in airports:
 
+                runcount = 0
+
                 # temp variables
                 airport_temp = {}
                 flight_counter = 0
@@ -399,6 +401,9 @@ with open("data/flights.csv", "r", newline="") as fl:
                 writer.writerow(airport_temp)
 
                 fl.seek(0)
+
+                runcount += 1
+                print("Next.. {}".format(runcount))
 
 
 

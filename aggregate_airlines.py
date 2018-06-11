@@ -32,6 +32,8 @@ fieldnames = ["name", "name_iata", "city", "flights", "delays", \
 "flights_nov", "delays_nov", "total_delay_nov", \
 "flights_dec", "delays_dec", "total_delay_dec"]
 
+runcount = 0
+
 # write airports file
 with open("data/flights.csv", "r", newline="") as fl:
     with open("data/airlines.csv", "r", newline="") as al:
@@ -311,9 +313,8 @@ with open("data/flights.csv", "r", newline="") as fl:
                             flight_counter_dec += 1
 
                 # fill dict with data for airline
-                airline_temp["name"] = airline["AIRPORT"]
+                airline_temp["name"] = airline["AIRLINE"]
                 airline_temp["name_iata"] = airline["IATA_CODE"]
-                airline_temp["city"] = airline["CITY"]
                 airline_temp["flights"] = flight_counter
                 airline_temp["delays"] = delay_counter
                 airline_temp["cancelled"] = cancel_counter
@@ -399,3 +400,6 @@ with open("data/flights.csv", "r", newline="") as fl:
                 writer.writerow(airline_temp)
 
                 fl.seek(0)
+
+                runcount += 1
+                print("Next.. {}".format(runcount))
