@@ -45,13 +45,9 @@
 * Bug fixed: csv reader needed to be reset to the start of the flights file for every loop in airports. Now I just need to let the code run (overnight?), and write the same code format for airlines.
 * Working further on the layout of the page. Picked a dark Bootswatch theme, added a navbar with search box.
 * Finished running the scripts for data aggregation: now have two new data files.
-
 * Airline data
-
 ![airlinedata](doc/airlinedata.png)
-
 * Airport data
-
 ![airportdata](doc/airportdata.png)
 
 
