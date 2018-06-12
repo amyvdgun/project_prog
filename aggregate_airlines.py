@@ -9,6 +9,8 @@ for airlines and one for airports in the U.S.
 
 import csv
 
+runcount = 0
+
 # set fieldnames for dictwriter
 fieldnames = ["name", "name_iata", "city", "flights", "delays", \
 "cancelled", "early", "total_delay_m", \
@@ -31,8 +33,6 @@ fieldnames = ["name", "name_iata", "city", "flights", "delays", \
 "flights_oct", "delays_oct", "total_delay_oct", \
 "flights_nov", "delays_nov", "total_delay_nov", \
 "flights_dec", "delays_dec", "total_delay_dec"]
-
-runcount = 0
 
 # write airports file
 with open("data/flights.csv", "r", newline="") as fl:
@@ -164,7 +164,7 @@ with open("data/flights.csv", "r", newline="") as fl:
                         if int(flight["CANCELLED"]) != 1:
 
                             # if the delay is more than 0 minutes
-                            if int(flight["DEPARTURE_DELAY"]) > 0:
+                            if int(flight["DEPARTURE_DELAY"]) >= 15:
 
                                 # increase the delay counter
                                 delay_counter += 1

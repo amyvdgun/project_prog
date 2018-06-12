@@ -53,11 +53,12 @@
 ### 12-06-2017
 
 * Standard layout plan.
-![airlinedata](doc/layout.png)
+![layout](doc/layout.png)
 * Plans: write a data loader script and (hopefully) finish making the bar chart rankings of flights.
 * Found out that when counting the number of flights on all airports i'm 'short' about 500.000 flights. That means that either there are 500.000 flights that were diverted and landed in the U.S. OR something went wrong in running the script OR there is some other technical explaination. However, I still think I have a representative sample of flights to use for visualisation.
 * Found out that for most rows more than half of the flights are counted as delayed. This makes sense because in my script a flight counts as a delay when it departs one minute or more after scheduled departure time. Guidelines from the Federal Aviation Administration (FAA) define less strict definition of a delay; **the FAA consideres a flight delayed when it departs more than 15 minutes after the scheduled departure time** (https://en.wikipedia.org/wiki/Flight_cancellation_and_delay).
 * I have to run the scripts again tonight with these new settings.
+* To use the methods I'm most fimiliar with convert CSV files to JSON.
 
 ### 13-06-2017
 

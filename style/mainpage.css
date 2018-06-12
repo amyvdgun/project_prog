@@ -1,0 +1,17 @@
+/** 
+ * Jesse Haenen
+ * 10670742
+ * 
+ * Minor Programmeren: Final project
+ **/
+
+.sidebar {
+    width: 14%;
+    height: 100%;
+    outline: 1px solid #ffffff;
+}
+
+.dashboard {
+    width: 86%;
+    height: 100%;
+}
