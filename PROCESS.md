@@ -29,7 +29,7 @@
 * New insight: need seperate week and month files for the week/month filtering. I might just save these as seperate columns for both airports and airlines but will take 7 + 12 extra columns.
 * Extra work for the day/month columns would only have to be done once because code structure for airlines.
 
-![sketch](doc/snip.png)
+![codesnip](doc/snip.png)
 
 * and it goes on and on... for every week / month
 
@@ -48,11 +48,11 @@
 
 * Airline data
 
-![sketch](doc/airlinedata.png)
+![airlinedata](doc/airlinedata.png)
 
 * Airport data
 
-![sketch](doc/airportdata.png)
+![airportdata](doc/airportdata.png)
 
 
 ### 12-06-2017
