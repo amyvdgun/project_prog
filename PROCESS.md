@@ -72,6 +72,11 @@
 
 ### 14-06-2017
 
+* Finish scrolling issues. Sidebar is now very close to how I want it but needs some extra tweaking.
+![layout2](doc/scroll-fix.png)
+* Divided the dashboard into 4 divs.
+* Started writing new scripts for: 1) text info, 2) scatter plot, 3) top locations/airlines, 4) weekly / monthly breakdown (in order of priority). 
+
 ### 15-06-2017
 
 ## Week 3

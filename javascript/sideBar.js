@@ -9,23 +9,21 @@
  **/
 
 function sideBar(data){
-    //sort bars based on value
+
     data = data.sort(function (a, b) {
         return d3.ascending(1 - (a.delays / a.flights), 1 - (b.delays / b.flights));
     })
 
-    console.log(data)
-
-    //set up svg using margin conventions - we'll need plenty of room on the left for labels
+    // set up svg using margin conventions - we'll need plenty of room on the left for labels
     var margin = {
-        top: 0,
-        right: 25,
-        bottom: 0,
+        top: 10,
+        right: 45,
+        bottom: 10,
         left: 0
     };
 
-    var width = 260 - margin.left - margin.right,
-        height = 7000 - margin.top - margin.bottom;
+    var width = d3.select(".bd-sidebar").node().getBoundingClientRect().width - margin.left - margin.right,
+        height = 6000 - margin.top - margin.bottom;
 
     var svg = d3.select(".bd-sidebar").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -38,25 +36,24 @@ function sideBar(data){
         .domain([0, 1]);
 
     var y = d3.scale.ordinal()
-        .rangeRoundBands([height, 0], .1)
+        .rangeBands([height, 0], .2)
         .domain(data.map(function (d) {
             return d.name;
         }));
-
-    //make y axis to show bar names
-    // var yAxis = d3.svg.axis()
-    //     .scale(y)
-    //     .tickSize(0)
-    //     .orient("right");
-
-    // var gy = svg.append("g")
-    //     .attr("class", "y axis")
-    //     .call(yAxis)
 
     var bars = svg.selectAll(".bar")
         .data(data)
         .enter()
         .append("g")
+
+    var tip = d3.tip()
+        .attr("class", "tooltip")
+        .offset([-10, 0])
+        .html(function(d) {
+            return d.name;
+        })
+
+    svg.call(tip);
 
     //append rects
     bars.append("rect")
@@ -69,16 +66,27 @@ function sideBar(data){
         .attr("fill", function(d) { return d3.interpolateRdYlGn(1 - (d.delays / d.flights)) })
         .attr("width", function (d) {
             return x(1 - (d.delays / d.flights));
-        });
-
-    var tip = d3.tip()
-        .attr("class", "tooltip")
-        .offset([-10, 0])
-        .html(function(d) {
-            return d.name;
         })
-    
-    svg.call(tip);
+        // .on('mouseover', tip.show)
+        .on('mouseover', function(d){
+            tip.show(d)
+            d3.select(this).transition()
+                .style("stroke-opacity", 1.0)
+                .duration(200)
+        })
+        // .on('mouseout', tip.hide)
+        .on('mouseout', function(d){
+            tip.hide(d)
+            d3.select(this).transition()
+                .style("stroke-opacity", 0.0)
+                .duration(200)
+        })
+        .on("mousemove", function() {
+            mouseX = d3.event.clientX;
+            mouseY = d3.event.clientY;
+            tip.style("top", mouseY + "px");
+            tip.style("left", mouseX + "px");
+        });
 
     //add a value label to the right of each bar
     bars.append("text")
@@ -94,14 +102,6 @@ function sideBar(data){
         .text(function (d) {
             var format = d3.format(".2f")
             return format((1 - (d.delays / d.flights)));
-        })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-        .on("mousemove", function() {
-            mouseX = d3.event.clientX;
-            mouseY = d3.event.clientY;
-            tip.style("top", mouseY + "px");
-            tip.style("left", mouseX + "px");
         });
 
     //add a value label to the right of each bar
