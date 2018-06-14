@@ -62,6 +62,14 @@
 
 ### 13-06-2017
 
+* Now that the data is finished with the proper delay parameters, I started making the sidebar vis.
+* The sidebar needs to be seperate from the navbar, but still scrollable so that the rest of the page is fixed.
+* To avoid overlap between Bootstrap and manual CSS, I want to style my webpage with Bootstrap only.
+* Started using the Bootstrap grid system to make the seperate parts of the page. I'm still not sure how to make the sidebar so that: it doesn't scroll OVER the navbar, ONLY the sidebar is scrollable and it's height/lenght is the COMPLETE page (minus the navbar).
+* So far I achieved this:
+![layout](doc/scroll-issues.png)
+* Once the sidebar is positioned correctly I need to: add a tooltip, highlight the bar on mouseover and add functionality to interact with the main page.
+
 ### 14-06-2017
 
 ### 15-06-2017

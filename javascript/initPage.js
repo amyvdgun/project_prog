@@ -24,7 +24,7 @@ function initPage(error, response) {
     var airportData = response[0];
     var airlineData = response[1];
 
-    console.log(airlineData);
+    console.log(airportData);
 
     sideBar(airportData);
 }

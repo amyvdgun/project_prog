@@ -5,13 +5,28 @@
  * Minor Programmeren: Final project
  **/
 
-.sidebar {
-    width: 14%;
-    height: 100%;
-    outline: 1px solid #ffffff;
+.label {
+    fill: whitesmoke;
+    text-shadow: 2px 2px 4px #000000;
+    font-size: 12px;
 }
 
-.dashboard {
-    width: 86%;
+body {
+    fill: whitesmoke;
+}
+
+.full-page {
     height: 100%;
+}
+
+.tooltip {
+    position: absolute;
+    width: 190px;
+    height: 160px;
+    padding: 2px;
+    font: 14px;
+    background: #e7e1ef;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
 }
