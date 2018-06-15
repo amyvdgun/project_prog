@@ -12,6 +12,7 @@
  body {
     fill: whitesmoke;
     height: 100%;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .label {
@@ -48,7 +49,7 @@
     stroke-width: 2px;
 }
 
-.text-info {
-    height: 50%;
+.searchbutton-text {
+    text-shadow: 2px 2px 4px #000000;
 }
 

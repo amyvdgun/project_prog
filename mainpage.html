@@ -34,6 +34,9 @@
     <!-- Javascript -->
     <script src="javascript/initPage.js"></script>
     <script src="javascript/sideBar.js"></script>
+    <script src="javascript/textInfo.js"></script>
+    <script src="javascript/periodInfo.js"></script>
+    <script src="javascript/rankInfo.js"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -46,15 +49,12 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" _lpchecked="1">
                     <input class="form-control mr-sm-2" placeholder="Search airport or airline" type="text">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    <button class="btn btn-secondary my-2 my-sm-0 searchbutton-text" type="submit">Search</button>
                 </form>
             </div>
         </div>
@@ -68,11 +68,11 @@
             <!-- Dashboard -->
             <div class="col-10" id="dashboard">
                 <div class="row" style="height: 50%">
-                    <div class="col-6"></div>
+                    <div class="col-6" id="textinfo"></div>
                     <div class="col-6"></div>
                 </div>
                 <div class="row" style="height: 50%">
-                    <div class="col-6"></div>
+                    <div class="col-6" id="scatterinfo"></div>
                     <div class="col-6"></div>
                 </div>
             </div>

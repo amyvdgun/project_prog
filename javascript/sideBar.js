@@ -86,6 +86,10 @@ function sideBar(data){
             mouseY = d3.event.clientY;
             tip.style("top", mouseY + "px");
             tip.style("left", mouseX + "px");
+        })
+        .on("click", function(selection) {
+            textInfo(data, this.__data__.name_iata);
+            scatterInfo(data, this.__data__.name_iata);
         });
 
     //add a value label to the right of each bar

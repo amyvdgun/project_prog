@@ -79,6 +79,12 @@
 
 ### 15-06-2017
 
+* Settled on dividing the dashboard into four equal parts (for now). Now prioritizing making the visualizations.
+* Implemented onclick handler for side bar.
+* Implemented interactive text info div.
+![text](doc/textinfo.png)
+* Started writing scatter plot script, which will fall in the the same onclick handler for the side bar (like every vis).
+
 ## Week 3
 
 ### 18-06-2017
