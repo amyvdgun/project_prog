@@ -8,14 +8,16 @@
  * 
  **/
 
+//  TODO: REMOVE SELECTION ARGUMENT IF NOT USED
+
  function scatterInfo(data, selection) {
-     console.log(data)
-     console.log(selection)
+
+    var format = d3.format(".2f")
 
      // set margins and svg size
-    var margin = {top: 0, right: 0, bottom: 0, left: 0},
-        width = 400 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+    var margin = {top: 30, right: 30, bottom: 30, left: 30},
+        width = d3.select("#scatterinfo").node().getBoundingClientRect().width - margin.left - margin.right,
+        height = d3.select("#scatterinfo").node().getBoundingClientRect().height - margin.top - margin.bottom;
 
     // set scale of axes
     var x = d3.scale.linear()
@@ -34,60 +36,68 @@
         .orient("left");
 
     // append svg to the winegraph container
-    var svg = d3.select("#weathergraph").append("svg")
+    var svg = d3.select("#scatterinfo").append("svg")
+        .attr("id", "scatter-svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
     .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // convert data points to numeric
-    data.forEach(function(d) {
-        d.rainfall = +d.rainfall;
-        d.temperature = +d.temperature;
-    });
+    // // convert data points to numeric
+    // data.forEach(function(d) {
+    //     d.rainfall = +d.rainfall;
+    //     d.temperature = +d.temperature;
+    // });
 
     // set domains for axes
-    x.domain(d3.extent(data, function(d) { return d.rainfall; })).nice();
-    y.domain([0, d3.max(data, function(d) { return d.temperature + 4; })]);
+    x.domain(d3.extent(data, function(d) {
+        return Number(format(1 - (d.delays / d.flights))); })).nice();
+    
+    y.domain(d3.extent(data, function(d) {
+        return Number(format(d.total_delay_m / d.flights)); })).nice();
+    
+    // console.log(extent(data, function(d) {
+    //     return format(d.total_delay_m / d.flights); }))
+    // console.log(y(0))
+    // console.log(y(10))
 
     // append invisible tooltip container
-    var tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+    // var tooltip = d3.select("body").append("div")
+    //     .attr("class", "tooltip")
+    //     .style("opacity", 0);
 
-    // set tooltip content
-    var tipMouseover = function(d) {
-        var html  = d.country + "<br/>" +
-                    "<b> Seasonal avg. temperature: </b>" + d.temperature + "<br/>" +
-                    "<b> Seasonal avg. rainfall: </b>" + d.rainfall;
+    // // set tooltip content
+    // var tipMouseover = function(d) {
+    //     var html  = d.name;
 
-        tooltip.html(html)
-            .style("left", (d3.event.pageX + 15) + "px")
-            .style("top", (d3.event.pageY - 28) + "px")
-        .transition()
-            .duration(200)
-            .style("opacity", .9)
-
-    };
+    //     tooltip.html(html)
+    //         .style("left", (d3.event.pageX + 15) + "px")
+    //         .style("top", (d3.event.pageY - 28) + "px")
+    //     .transition()
+    //         .duration(200)
+    //         .style("opacity", .9)
+    // };
 
     // tooltip mouseout
-    var tipMouseout = function(d) {
-        tooltip.transition()
-            .duration(300)
-            .style("opacity", 0);
-    };
+    // var tipMouseout = function(d) {
+    //     tooltip.transition()
+    //         .duration(300)
+    //         .style("opacity", 0);
+    // };
 
     // draw the dots in the scatter plot
     svg.selectAll(".dot")
         .data(data)
     .enter().append("circle")
         .attr("class", "dot")
-        .attr("id", function(d) { return d.country.replace(/\s/g, ''); })
-        .attr("r", 4.5)
-        .attr("cx", function(d) { return x(d.rainfall); })
-        .attr("cy", function(d) { return y(d.temperature); })
-        .on("mouseover", tipMouseover)
-        .on("mouseout", tipMouseout)
+        .attr("id", function(d) { return d.name_iata; })
+        .attr("r", 1.5)
+        .attr("cx", function(d) { return x(format(1 - (d.delays / d.flights))); })
+        .attr("cy", function(d) { 
+            console.log( ((d.total_delay_m)))
+            return y(format(d.total_delay_m / d.flights)); })
+        // .on("mouseover", tipMouseover)
+        // .on("mouseout", tipMouseout)
 
     // draw x-axis
     svg.append("g")
@@ -99,7 +109,7 @@
         .attr("x", width)
         .attr("y", -6)
         .style("text-anchor", "end")
-        .text("Rainfall (mm)");
+        .text("% On time");
 
     // draw y-axis
     svg.append("g")
@@ -111,5 +121,5 @@
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Average temperature (celsius)")
+        .text("Average delay (min)")
  }

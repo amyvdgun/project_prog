@@ -8,28 +8,15 @@
  * 
  **/
 
-function sideBar(data){
+function sideBar(response){
 
-    data = data.sort(function (a, b) {
+    data = response[0].sort(function (a, b) {
         return d3.ascending(1 - (a.delays / a.flights), 1 - (b.delays / b.flights));
     })
 
-    // set up svg using margin conventions - we'll need plenty of room on the left for labels
-    var margin = {
-        top: 10,
-        right: 45,
-        bottom: 10,
-        left: 0
-    };
-
-    var width = d3.select(".bd-sidebar").node().getBoundingClientRect().width - margin.left - margin.right,
+    var margin = {top: 10, right: 45, bottom: 10, left: 0},
+        width = d3.select(".bd-sidebar").node().getBoundingClientRect().width - margin.left - margin.right,
         height = 6000 - margin.top - margin.bottom;
-
-    var svg = d3.select(".bd-sidebar").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var x = d3.scale.linear()
         .range([0, width])
@@ -40,6 +27,12 @@ function sideBar(data){
         .domain(data.map(function (d) {
             return d.name;
         }));
+
+    var svg = d3.select(".bd-sidebar").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var bars = svg.selectAll(".bar")
         .data(data)
@@ -87,9 +80,17 @@ function sideBar(data){
             tip.style("top", mouseY + "px");
             tip.style("left", mouseX + "px");
         })
-        .on("click", function(selection) {
+        .on("click", function() {
             textInfo(data, this.__data__.name_iata);
-            scatterInfo(data, this.__data__.name_iata);
+
+            if (document.getElementById("scatter-svg") != null) {
+                highlightScatter(data, this.__data__.name_iata);
+            }
+            else {
+                scatterInfo(data, this.__data__.name_iata);
+            }
+
+            rankInfo(response, this.__data__.name_iata);
         });
 
     //add a value label to the right of each bar

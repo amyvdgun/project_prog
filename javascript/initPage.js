@@ -21,10 +21,10 @@ function initPage(error, response) {
     if (error) throw error;
 
     // get the data set from the response
-    var airportData = response[0];
-    var airlineData = response[1];
+    // var airportData = response[0];
+    // var airlineData = response[1];
 
-    console.log(airportData);
+    // console.log(airportData);
 
-    sideBar(airportData);
+    sideBar(response);
 }

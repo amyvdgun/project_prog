@@ -53,3 +53,19 @@
     text-shadow: 2px 2px 4px #000000;
 }
 
+.dot {
+    stroke: whitesmoke;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: whitesmoke;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    opacity: 0.5;
+}
+
+.tick {
+    font-size: 12px;
+}

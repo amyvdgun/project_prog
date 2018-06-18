@@ -89,6 +89,15 @@
 
 ### 18-06-2017
 
+**Plans for the week**
+* Monday: Finish scatter plot
+* Tuesday: Make bar charts
+* Wednesday: Make week/month line graph + button
+* Thursday: Search bar + autocomplete
+* Friday: Finish up whatever is left & styling
+* Finished writing the scatter and updates. Only minor bug left.
+* For the rankings for every airport and every airline, I need to write another script that writes a json file.
+
 ### 19-06-2017
 
 ### 20-06-2017
