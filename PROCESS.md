@@ -100,6 +100,12 @@
 
 ### 19-06-2017
 
+* Finished scatter yesterday + interactivity with the sidebar.
+![scatter](doc/scatter.png)
+* Had to run a script to generate a new data set that tracks flights and delays at a lower level.
+* Started working on both the third and fourth vis. While working on the fourth (the breakdown per day of the week / month) I noticed a bug in my initial data file: all october months are empty and I haven't found the source of that bug yet. To get fully correct data I will need to debug and run the script again, but I choose to prioritize finishing the visualisations.
+* Another thing I am struggling with is getting the data in the correct format for the day/month vis.
+
 ### 20-06-2017
 
 ### 21-06-2017

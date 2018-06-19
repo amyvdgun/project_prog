@@ -48,7 +48,6 @@ function sideBar(response){
 
     svg.call(tip);
 
-    //append rects
     bars.append("rect")
         .attr("class", "bar")
         .attr("y", function (d) {
@@ -81,16 +80,16 @@ function sideBar(response){
             tip.style("left", mouseX + "px");
         })
         .on("click", function() {
-            textInfo(data, this.__data__.name_iata);
 
             if (document.getElementById("scatter-svg") != null) {
                 highlightScatter(data, this.__data__.name_iata);
             }
             else {
+                textInfo(data, this.__data__.name_iata);
                 scatterInfo(data, this.__data__.name_iata);
+                // rankInfo(response, this.__data__.name_iata);
+                periodInfo(response, this.__data__.name_iata, "week");
             }
-
-            rankInfo(response, this.__data__.name_iata);
         });
 
     //add a value label to the right of each bar

@@ -93,9 +93,7 @@
         .attr("id", function(d) { return d.name_iata; })
         .attr("r", 1.5)
         .attr("cx", function(d) { return x(format(1 - (d.delays / d.flights))); })
-        .attr("cy", function(d) { 
-            console.log( ((d.total_delay_m)))
-            return y(format(d.total_delay_m / d.flights)); })
+        .attr("cy", function(d) { return y(format(d.total_delay_m / d.flights)); })
         // .on("mouseover", tipMouseover)
         // .on("mouseout", tipMouseout)
 
