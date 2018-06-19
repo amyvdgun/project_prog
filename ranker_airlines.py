@@ -48,7 +48,6 @@ with open("data/flights.csv", "r", newline="") as infile:
                     
             master_list.append(temp_airline_dict)
             infile.seek(0)
-            break
-
+            
         out = json.dumps([row for row in master_list])
         outfile.write(out)
