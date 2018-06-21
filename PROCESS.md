@@ -108,6 +108,11 @@
 
 ### 20-06-2017
 
+* While working on the new bar charts showing the rankings (airlines for every airports), I ran into a problem: I only aggregated data for the airlines that fly from the selected airport. This means in some cases, there are only one or two airlines per airport. This is not ideal because then only one or two bars can be drawn which looks ugly, and leads to update functions not working. I now have to run data scripts in python again to fix this issue.
+* Ran into another data hiccup for the final vis but this can be solved in Javascript.
+* Apart from the data, I still need to make a toggle button for the sidebar and for the week/month view, and a functional search bar. It's still a lot of work so I hope the data processing part won't take too much time.
+![uglybar](doc/uglybar.png)
+
 ### 21-06-2017
 
 ### 22-06-2017
