@@ -21,24 +21,29 @@ function rankInfo(response, selection) {
     else {
 
         var airportData = response[2];
+        var airlineData = response[3];
         var index = selectionFinder(airportData, selection);
         var dataPoint = airportData[index];
         var airlineKeys = Object.keys(dataPoint.airlines);
-        // console.log(airlineKeys);
-        // console.log(dataPoint);
 
         var data = []
 
         for (var i = 0; i < airlineKeys.length; i++) {
             tempObject = {};
-            tempObject.name = airlineKeys[i];
+            tempObject.name = airlineKeys[i];    
             tempObject.ontime = 1 - (dataPoint.airlines[airlineKeys[i]].delays / dataPoint.airlines[airlineKeys[i]].flights);
             data.push(tempObject);
         }
 
-        console.log(data)
+        for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < airlineData.length; j++) {
+                if (data[i].name == airlineData[j].name_iata) {
+                    data[i].name = airlineData[j].name
+                }
+            }
+        }
 
-        var margin = {top: 10, right: 45, bottom: 10, left: 0},
+        var margin = {top: 30, right: 45, bottom: 10, left: 0},
             width = d3.select("#rankinfo").node().getBoundingClientRect().width - margin.left - margin.right,
             height = d3.select("#rankinfo").node().getBoundingClientRect().height - margin.top - margin.bottom;
 
@@ -130,11 +135,15 @@ function rankInfo(response, selection) {
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", function (d) {
-                return x(d.ontime) + 3;
+                if (d.ontime) {
+                    return x(d.ontime) + 3;
+                }
             })
             .text(function (d) {
-                var format = d3.format(".2f")
-                return format(d.ontime);
+                if (d.ontime) {
+                    var format = d3.format(".2f")
+                    return format(d.ontime);
+                }
             });
 
         //add a value label to the right of each bar

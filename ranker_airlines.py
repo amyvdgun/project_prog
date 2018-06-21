@@ -13,6 +13,7 @@ import json
 airline_list = []
 airport_list = []
 master_list = []
+iata_list = []
 
 print("Generating keys...")
 with open("data/airlines_aggregated.csv", "r", newline="") as infile:
@@ -24,6 +25,7 @@ with open("data/airports_aggregated.csv", "r", newline="") as infile:
     airports = csv.DictReader(infile, delimiter=",")
     for airport in airports:
         airport_list.append((airport["name_iata"], airport["name"]))
+        iata_list.append(airport["name_iata"])
 
 print("Generating rankings...")
 with open("data/flights.csv", "r", newline="") as infile:
@@ -40,10 +42,9 @@ with open("data/flights.csv", "r", newline="") as infile:
             for key in airport_list:
                 temp_airline_dict["airports"][key[0]] = {"flights":0, "delays":0}
 
-
             for flight in flights:
                 if flight["AIRLINE"] == airline[0]:
-                    if int(flight["CANCELLED"]) != 1:
+                    if int(flight["CANCELLED"]) != 1 and flight["ORIGIN_AIRPORT"] in iata_list:
                         # if flight["ORIGIN_AIRPORT"] not in temp_airline_dict["airports"]:
                         #     temp_airline_dict["airports"][flight["ORIGIN_AIRPORT"]] = {}
                         #     temp_airline_dict["airports"][flight["ORIGIN_AIRPORT"]]["flights"] = 1
@@ -57,7 +58,6 @@ with open("data/flights.csv", "r", newline="") as infile:
                     
             master_list.append(temp_airline_dict)
             infile.seek(0)
-            break
             
         out = json.dumps([row for row in master_list])
         outfile.write(out)

@@ -14,19 +14,12 @@ window.onload = function() {
 	d3.queue()
 		.defer(d3.json, "data/airports_aggregated.json")
         .defer(d3.json, "data/airlines_aggregated.json")
-        .defer(d3.json, "data/ranklist_airports.json")
-        .defer(d3.json, "data/ranklist_airlines.json")
+        .defer(d3.json, "data/ranklist_airports_2.json")
+        .defer(d3.json, "data/ranklist_airlines_2.json")
 		.awaitAll(initPage);
 };
 
 function initPage(error, response) {
     if (error) throw error;
-
-    // get the data set from the response
-    // var airportData = response[0];
-    // var airlineData = response[1];
-
-    // console.log(airportData);
-
     sideBar(response);
 }

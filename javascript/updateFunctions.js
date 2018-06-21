@@ -49,26 +49,27 @@ function updateRanks(data, selection) {
     else {
 
         var airportData = response[2];
+        var airlineData = response[3];
         var index = selectionFinder(airportData, selection);
         var dataPoint = airportData[index];
         var airlineKeys = Object.keys(dataPoint.airlines);
-        // console.log(airlineKeys);
-        // console.log(dataPoint);
 
         var data = []
 
         for (var i = 0; i < airlineKeys.length; i++) {
             tempObject = {};
-            tempObject.name = airlineKeys[i];
+            tempObject.name = airlineKeys[i];    
             tempObject.ontime = 1 - (dataPoint.airlines[airlineKeys[i]].delays / dataPoint.airlines[airlineKeys[i]].flights);
             data.push(tempObject);
         }
 
-        // console.log(data)
-
-        var margin = {top: 10, right: 45, bottom: 10, left: 0},
-            width = d3.select("#rankinfo").node().getBoundingClientRect().width - margin.left - margin.right,
-            height = d3.select("#rankinfo").node().getBoundingClientRect().height - margin.top - margin.bottom;
+        for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < airlineData.length; j++) {
+                if (data[i].name == airlineData[j].name_iata) {
+                    data[i].name = airlineData[j].name
+                }
+            }
+        }
 
         var x = d3.scale.linear()
             .range([0, width])
@@ -80,102 +81,35 @@ function updateRanks(data, selection) {
                 return d.name;
             }));
 
-        var svg = d3.select("#rankinfo").append("svg")
-            .attr("id", "rank-svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+         // join
+        var bar = svg.selectAll(".bar")
+            .data(data);
 
-        var bars = svg.selectAll(".bar")
-            .data(data)
-            .enter()
-            .append("g")
+        // update
+        bar
+        .transition()
+            .attr("y", function(d){ return y(d[y_var]); })
+            .attr("height", function(d){ return height - y(d[y_var]); });
 
-        var tip = d3.tip()
-            .attr("class", "tooltip")
-            .offset([-10, 0])
-            .html(function(d) {
-                return d.name;
-            })
+        amount
+        .transition()
+            .attr("y", function(d){ return y(d[y_var]); })
+            .text(function(d){ return d[y_var]; });
 
-        svg.call(tip);
-
-        //append rects
-        var barZ = bars.append("rect")
+        // enter
+        bar.enter().append("rect")
             .attr("class", "bar")
-            .attr("x", 0)
-            .attr("y", function (d) {
-                return y(d.name);
-            })
-            .attr("height", y.rangeBand())
-            .attr("fill", function(d) { return d3.interpolateRdYlGn(d.ontime) })
-            .attr("width", function (d) {
-                return x(d.ontime);
-            });
-            
-            barZ.transition()
-            .duration(500);
+            .attr("x", function(d){ return x(d[x_var]); })
+            .attr("y", function(d){ return y(d[y_var]); })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d){ return height - y(d[y_var]); })
+            .attr("fill", function(d){ return color(d[x_var]); });
 
-            barZ.on('mouseover', function(d){
-                tip.show(d.name)
-                d3.select(this).transition()
-                    .style("stroke-opacity", 1.0)
-                    .duration(200)
-            })
-            // .on('mouseout', tip.hide)
-            .on('mouseout', function(d){
-                tip.hide(d.name)
-                d3.select(this).transition()
-                    .style("stroke-opacity", 0.0)
-                    .duration(200)
-            })
-            .on("mousemove", function() {
-                var mouseX = d3.event.clientX;
-                var mouseY = d3.event.clientY;
-                tip.style("top", mouseY + "px");
-                tip.style("left", mouseX + "px");
-            });
-            // .on("click", function() {
-            //     textInfo(data, this.__data__.name_iata);
-
-            //     if (document.getElementById("scatter-svg") != null) {
-            //         highlightScatter(data, this.__data__.name_iata);
-            //     }
-            //     else {
-            //         scatterInfo(data, this.__data__.name_iata);
-            //     };
-
-            //     rankInfo(response, this.__data__.name_iata);
-            // });
-
-        //add a value label to the right of each bar
-        bars.append("text")
-            .attr("class", "label")
-            //y position of the label is halfway down the bar
-            .attr("y", function (d) {
-                return y(d.name) + y.rangeBand() / 2 + 4;
-            })
-            //x position is 3 pixels to the right of the bar
-            .attr("x", function (d) {
-                return x(d.ontime) + 3;
-            })
-            .text(function (d) {
-                var format = d3.format(".2f")
-                return format(d.ontime);
-            });
-
-        //add a value label to the right of each bar
-        bars.append("text")
-            .attr("class", "label")
-            //y position of the label is halfway down the bar
-            .attr("y", function (d) {
-                return y(d.name) + y.rangeBand() / 2 + 4;
-            })
-            .attr("text-anchor", "left")
-            .attr("x", 10)
-            .text(function (d) {
-                return (d.name);
-            });
+        amount.enter().append("text")
+            .attr("class", "amount")
+            .attr("x", function(d){ return x(d[x_var]) + x.bandwidth() / 2; })
+            .attr("y", function(d){ return y(d[y_var]); })
+            .attr("dy", 16)
+            .text(function(d){ return d[y_var]; });
     }
 }
