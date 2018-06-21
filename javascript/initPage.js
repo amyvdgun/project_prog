@@ -14,8 +14,8 @@ window.onload = function() {
 	d3.queue()
 		.defer(d3.json, "data/airports_aggregated.json")
         .defer(d3.json, "data/airlines_aggregated.json")
-        // .defer(d3.json, "data/ranklist_airports.json")
-        // .defer(d3.json, "data/ranklist_airlines.json")
+        .defer(d3.json, "data/ranklist_airports.json")
+        .defer(d3.json, "data/ranklist_airlines.json")
 		.awaitAll(initPage);
 };
 

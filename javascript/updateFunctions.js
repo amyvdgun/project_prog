@@ -2,21 +2,49 @@
  * Jesse Haenen
  * 10670742
  * 
- * Minor Programmeren: Final project
+ * Assignment week 5: linked views
  * 
- * If this script is ran with a selection variable that is of lenght 3 
- * (airport IATA codes), the script shows the top and bottom 3 airlines for that
- * depart from specific airport (in terms of flying on time).
- * If the script is ran with a selection variable that is of lenght 2 (airline
- * IATA codes), the script shows the top and bottom 3 airports from which that
- * airline departs.
- * 
+ * Script that updates the climate graph scatter plot
+ * based on datamap interaction. When a country is clicked
+ * on the map, that country is enlarged, and the rest of the
+ * dots fade out.
+ *  
  **/
 
-function rankInfo(response, selection) {
+function highlightScatter(data, selection) {
+
+    var found = false
+
+    // check if the clicked country is in the climate data set
+    for (var item in data) {
+
+        // remove spaces from the country name if any
+        if (data[item].name_iata == selection) {
+            found = true
+        }
+    }
+
+    // if so highlight the dot that corresponds with the seleciton
+    if (found) {
+
+        // blur the rest
+        d3.selectAll(".dot").transition()
+            .attr("opacity", 0.15)
+            .attr("r", 1.5)
+            .duration(300)
+    
+        // highlight the selected country
+        d3.selectAll("#" + selection).transition()
+            .attr("opacity", 1)
+            .attr("r", 3.0)
+            .duration(300)
+    }
+}
+
+function updateRanks(data, selection) {
 
     if (selection.length == 2) {
-        airlineData = response[3];
+        airlineData = response[3]
     }
     else {
 
@@ -36,7 +64,7 @@ function rankInfo(response, selection) {
             data.push(tempObject);
         }
 
-        console.log(data)
+        // console.log(data)
 
         var margin = {top: 10, right: 45, bottom: 10, left: 0},
             width = d3.select("#rankinfo").node().getBoundingClientRect().width - margin.left - margin.right,

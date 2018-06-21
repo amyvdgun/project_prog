@@ -74,21 +74,23 @@ function sideBar(response){
                 .duration(200)
         })
         .on("mousemove", function() {
-            mouseX = d3.event.clientX;
-            mouseY = d3.event.clientY;
+            var mouseX = d3.event.clientX;
+            var mouseY = d3.event.clientY;
             tip.style("top", mouseY + "px");
             tip.style("left", mouseX + "px");
         })
         .on("click", function() {
 
+            textInfo(data, this.__data__.name_iata);
+
             if (document.getElementById("scatter-svg") != null) {
                 highlightScatter(data, this.__data__.name_iata);
+                updateRanks(response, this.__data__.name_iata)
             }
             else {
-                textInfo(data, this.__data__.name_iata);
                 scatterInfo(data, this.__data__.name_iata);
-                // rankInfo(response, this.__data__.name_iata);
-                periodInfo(response, this.__data__.name_iata, "week");
+                rankInfo(response, this.__data__.name_iata);
+                // periodInfo(response, this.__data__.name_iata, "week");
             }
         });
 
