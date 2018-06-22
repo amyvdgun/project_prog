@@ -115,7 +115,17 @@
 
 ### 21-06-2017
 
+* Finished the new data script and got the data in the correct format to make the rankings bar chart visualisation.
+* Initial drawing of the ranked bars works but update function is still buggy.
+
 ### 22-06-2017
+
+* Finished update for the ranked bar chart.
+* Placed buttons in the sidebar and the fourth visualisation.
+* Selected another Bootswatch theme (Cyborg), because it looked a little better and the buttons have rounded edges. Also the bars 'pop' more and fits the theme better.
+* Started working on the week/month view and final vis.
+* Still need to work on functioning fourth visualisation, update buttons and search bar. The search bar is already in place and I will use the bootstrap-select package.
+![newskin](doc/newskin.png)
 
 ## Week 4
 

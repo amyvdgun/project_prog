@@ -29,7 +29,7 @@ function rankInfo(response, selection) {
         var data = []
 
         for (var i = 0; i < airlineKeys.length; i++) {
-            tempObject = {};
+            var tempObject = {};
             tempObject.name = airlineKeys[i];    
             tempObject.ontime = 1 - (dataPoint.airlines[airlineKeys[i]].delays / dataPoint.airlines[airlineKeys[i]].flights);
             data.push(tempObject);
@@ -42,6 +42,10 @@ function rankInfo(response, selection) {
                 }
             }
         }
+
+        var data = data.sort(function (a, b) {
+            return d3.ascending(a.ontime, b.ontime);
+        })    
 
         var margin = {top: 30, right: 45, bottom: 10, left: 0},
             width = d3.select("#rankinfo").node().getBoundingClientRect().width - margin.left - margin.right,
@@ -128,7 +132,7 @@ function rankInfo(response, selection) {
 
         //add a value label to the right of each bar
         bars.append("text")
-            .attr("class", "label")
+            .attr("class", "num-label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
                 return y(d.name) + y.rangeBand() / 2 + 4;

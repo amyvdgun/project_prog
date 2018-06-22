@@ -41,7 +41,7 @@ function highlightScatter(data, selection) {
     }
 }
 
-function updateRanks(data, selection) {
+function updateRanks(response, selection) {
 
     if (selection.length == 2) {
         airlineData = response[3]
@@ -71,6 +71,14 @@ function updateRanks(data, selection) {
             }
         }
 
+        var data = data.sort(function (a, b) {
+            return d3.ascending(a.ontime, b.ontime);
+        })  
+
+        var margin = {top: 30, right: 45, bottom: 10, left: 0},
+            width = d3.select("#rankinfo").node().getBoundingClientRect().width - margin.left - margin.right,
+            height = d3.select("#rankinfo").node().getBoundingClientRect().height - margin.top - margin.bottom;
+
         var x = d3.scale.linear()
             .range([0, width])
             .domain([0, 1]);
@@ -80,36 +88,76 @@ function updateRanks(data, selection) {
             .domain(data.map(function (d) {
                 return d.name;
             }));
+            
+        var bars = d3.select("#rank-svg")
+            .selectAll(".bar")
+            .data(data)
 
-         // join
-        var bar = svg.selectAll(".bar")
-            .data(data);
+        bars.exit()
+            .transition()
+            .duration(300)
+            .attr("y", function (d) {
+                return y(d.name);
+            })
+            .attr("height", y.rangeBand())
+            .style('fill-opacity', 1e-6)
+            .remove();
 
-        // update
-        bar
-        .transition()
-            .attr("y", function(d){ return y(d[y_var]); })
-            .attr("height", function(d){ return height - y(d[y_var]); });
-
-        amount
-        .transition()
-            .attr("y", function(d){ return y(d[y_var]); })
-            .text(function(d){ return d[y_var]; });
-
-        // enter
-        bar.enter().append("rect")
+          // data that needs DOM = enter() (a set/selection, not an event!)
+        bars.enter().append("rect")
             .attr("class", "bar")
-            .attr("x", function(d){ return x(d[x_var]); })
-            .attr("y", function(d){ return y(d[y_var]); })
-            .attr("width", x.bandwidth())
-            .attr("height", function(d){ return height - y(d[y_var]); })
-            .attr("fill", function(d){ return color(d[x_var]); });
+            .attr("y", function (d) {
+                return y(d.name);
+            })
+            .attr("height", y.rangeBand());
+        
+         // the "UPDATE" set:
+        bars.transition().duration(300)
+            .attr("x", 0)
+            .attr("width", function (d) {
+                return x(d.ontime);
+            })
+            .attr("y", function(d) { return y(d.name); })
+            .attr("height", y.rangeBand())
+            .attr("fill", function(d) { return d3.interpolateRdYlGn(d.ontime) });
 
-        amount.enter().append("text")
-            .attr("class", "amount")
-            .attr("x", function(d){ return x(d[x_var]) + x.bandwidth() / 2; })
-            .attr("y", function(d){ return y(d[y_var]); })
-            .attr("dy", 16)
-            .text(function(d){ return d[y_var]; });
+        var labels = d3.select("#rank-svg")
+            .selectAll(".num-label")
+            .data(data)
+        
+        labels.exit()
+            .transition()
+            .duration(300)
+            .attr("y", function (d) {
+                return y(d.name) + y.rangeBand() / 2 + 4;
+            })
+            .style('fill-opacity', 1e-6)
+            .remove();
+
+        // data that needs DOM = enter() (a set/selection, not an event!)
+        labels.enter().append("rect")
+            .attr("class", "num-label")
+            .attr("y", function (d) {
+                return y(d.name) + y.rangeBand() / 2 + 4;
+            });
+        
+        // the "UPDATE" set:
+        labels.transition().duration(300)
+            //y position of the label is halfway down the bar
+            .attr("y", function (d) {
+                return y(d.name) + y.rangeBand() / 2 + 4;
+            })
+            //x position is 3 pixels to the right of the bar
+            .attr("x", function (d) {
+                if (d.ontime) {
+                    return x(d.ontime) + 3;
+                }
+            })
+            .text(function (d) {
+                if (d.ontime) {
+                    var format = d3.format(".2f")
+                    return format(d.ontime);
+                }
+            });
     }
 }

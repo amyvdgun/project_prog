@@ -90,7 +90,7 @@ function sideBar(response){
             else {
                 scatterInfo(data, this.__data__.name_iata);
                 rankInfo(response, this.__data__.name_iata);
-                // periodInfo(response, this.__data__.name_iata, "week");
+                periodInfo(response, this.__data__.name_iata, "week");
             }
         });
 
